@@ -1,7 +1,8 @@
-A tutorial for SynExtend
-================
-npc
-2025-02-05
+    ---
+     title: "Portfolio item number 2"
+     excerpt: "Short description of portfolio item number 2 <br/><img src='/images/500x300.png'>"
+     collection: portfolio
+     ---
 
 ## R Markdown
 
@@ -29,7 +30,7 @@ summary(cars)
 
 You can also embed plots, for example:
 
-![](tutorial_files/figure-gfm/pressure-1.png)<!-- -->
+![](tutorial_files/figure-markdown/pressure-1.png)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to
 prevent printing of the R code that generated the plot.
