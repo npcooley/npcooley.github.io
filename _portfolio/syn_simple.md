@@ -1,27 +1,30 @@
 ---
+title: "Using SynExtend - Simple"
+excerpt: "A simple workflow with SynExtend, simply using a synteny map to perform orthology inference between two genomes."
 collection: portfolio
-excerpt: A simple workflow with SynExtend, simply using a synteny map to
-  perform orthology inference between two genomes.
-keep-yaml: true
-title: Using SynExtend - Simple
-toc-title: Table of contents
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: TRUE
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile,
+    encoding = encoding) })
+layout: post
+always_allow_html: true
 ---
 
-# SynExtend -- a work in progress!
+# SynExtend – a work in progress!
 
-As this is a simple workflow, there's not much dependencies here.
+As this is a simple workflow, there’s not much dependencies here.
 
-::: cell
-``` {.r .cell-code}
+``` r
 suppressMessages(library(SynExtend))
 suppressMessages(library(RSQLite))
 ```
-:::
 
 ## Data Collection
 
-::: cell
-``` {.r .cell-code}
+``` r
 ftps <- c("https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/948/472/415/GCF_948472415.1_JK4103/",
           "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/036/010/405/GCF_036010405.1_ASM3601040v1/")
 
@@ -43,12 +46,10 @@ fnas <- adds[1, ]
 gffs <- adds[2, ]
 amns <- adds[3, ]
 ```
-:::
 
 ## Data Processing
 
-:::: cell
-``` {.r .cell-code}
+``` r
 dbpath <- tempfile()
 conn01 <- dbConnect(SQLite(), dbpath)
 genecalls2 <- vector(mode = "list",
@@ -65,125 +66,99 @@ for (m1 in seq_along(fnas)) {
 }
 ```
 
-::: {.cell-output .cell-output-stdout}
+    ## Reading FASTA file chunk 1
+    ## 
+    ## 3 total sequences in table Seqs.
+    ## Time difference of 0.92 secs
+    ## 
+    ## ================================================================================
+    ## Time difference of 1.323431 mins
+    ## Reading FASTA file chunk 1
+    ## 
+    ## Added 1 new sequence to table Seqs.
+    ## 4 total sequences in table Seqs.
+    ## Time difference of 1.02 secs
+    ## 
+    ## ================================================================================
+    ## Time difference of 1.521185 mins
 
-    Reading FASTA file chunk 1
-
-    3 total sequences in table Seqs.
-    Time difference of 0.89 secs
-
-    ================================================================================
-    Time difference of 1.194636 mins
-
-    Reading FASTA file chunk 1
-
-    Added 1 new sequence to table Seqs.
-    4 total sequences in table Seqs.
-    Time difference of 0.86 secs
-
-    ================================================================================
-    Time difference of 1.414191 mins
-:::
-
-``` {.r .cell-code}
+``` r
 names(genecalls2) <- seq(length(genecalls2))
 ```
-::::
 
 ## Initial pipeline steps
 
-:::::: cell
-``` {.r .cell-code}
+``` r
 syn <- FindSynteny(dbFile = conn01,
                    verbose = TRUE)
 ```
 
-::: {.cell-output .cell-output-stdout}
-    ================================================================================
+    ## ================================================================================
+    ## 
+    ## Time difference of 61.74 secs
 
-    Time difference of 57.82 secs
-:::
-
-``` {.r .cell-code}
+``` r
 l01 <- NucleotideOverlap(SyntenyObject = syn,
                          GeneCalls = genecalls2,
                          Verbose = TRUE)
 ```
 
-::: {.cell-output .cell-output-stdout}
+    ## 
+    ## Reconciling genecalls.
+    ## ================================================================================
+    ## Finding connected features.
+    ## ================================================================================
+    ## Time difference of 0.4725101 secs
 
-    Reconciling genecalls.
-    ================================================================================
-    Finding connected features.
-    ================================================================================
-    Time difference of 0.465488 secs
-:::
-
-``` {.r .cell-code}
+``` r
 PrepareSeqs(SynExtendObject = l01,
             DataBase01 = conn01,
             Verbose = TRUE)
 ```
 
-::: {.cell-output .cell-output-stdout}
-    Preparing overhead data.
-    ================================================================================
-    Complete!
-    Time difference of 1.653675 secs
-:::
-::::::
+    ## Preparing overhead data.
+    ## ================================================================================
+    ## Complete!
+    ## Time difference of 1.649381 secs
 
 ## Inferrence evaluation steps
 
-:::::::: cell
-``` {.r .cell-code}
+``` r
 p01 <- SummarizePairs(SynExtendObject = l01,
                       DataBase01 = conn01,
                       Verbose = TRUE,
                       IndexParams = list("K" = 5))
 ```
 
-::: {.cell-output .cell-output-stdout}
-    Collecting pairs.
-    ================================================================================
-    Time difference of 1.308033 mins
-:::
+    ## Collecting pairs.
+    ## ================================================================================
+    ## Time difference of 1.423786 mins
 
-``` {.r .cell-code}
+``` r
 p02 <- ClusterByK(SynExtendObject = p01,
                   Verbose = TRUE,
                   ShowPlot = TRUE)
 ```
 
-::: {.cell-output .cell-output-stdout}
-    ================================================================================
-:::
+    ## ================================================================================
 
-::: cell-output-display
-![](syn_simple_files/figure-markdown/pipeline2-1.png)
-:::
+![](syn_simple_files/figure-gfm/pipeline2-1.png)<!-- -->
 
-::: {.cell-output .cell-output-stdout}
-    Time difference of 2.335643 secs
-:::
+    ## Time difference of 2.559679 secs
 
-``` {.r .cell-code}
+``` r
 p03 <- CompetePairs(SynExtendObject = p02[p02$ClusterID %in% which(attr(x = p02,
                                                                         which = "Retain")), ],
                     Verbose = TRUE,
                     PollContext = TRUE)
 ```
 
-::: {.cell-output .cell-output-stdout}
-    ================================================================================
-    Time difference of 0.5456212 secs
-:::
-::::::::
+    ## ================================================================================
+    ## Time difference of 0.5909169 secs
 
 ## Some plots
 
-:::: cell
-``` {.r .cell-code}
+``` r
 hist(x = p03$PID,
      breaks = seq(from = 0,
                   by = 0.01,
@@ -194,15 +169,12 @@ hist(x = p03$PID,
      xlab = "PID")
 ```
 
-::: cell-output-display
-![](syn_simple_files/figure-markdown/plots1-1.png)
-:::
-::::
+![](syn_simple_files/figure-gfm/plots1-1.png)<!-- -->
 
 ## Final thoughts
 
 SynExtend has been a bit of a meandering project. Part of the reason for
-it living in the research doldrums for so long is that there aren't
+it living in the research doldrums for so long is that there aren’t
 particularly good methods for benchmarking orthology inference,
 particularly in the space where this tool is intended for use. The goal
 here was to build a backbone of orthology inference for use with
