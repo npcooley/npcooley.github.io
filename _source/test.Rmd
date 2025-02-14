@@ -6,12 +6,16 @@ output:
   md_document:
     variant: gfm
     preserve_yaml: TRUE
+    toc: TRUE
+    toc_depth: 3
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile,
     encoding = encoding,
     output_dir = "../_portfolio") })
 always_allow_html: true
 ---
+
+# header 1
 
 ```{r setup, include = FALSE}
 
@@ -41,6 +45,7 @@ opts_chunk$set(fig.path = fig_path,
 list.files("../images")
 ```
 
+## subheader 1
 
 ## R Markdown
 
@@ -52,7 +57,11 @@ When you click the **Knit** button a document will be generated that includes bo
 summary(cars)
 ```
 
+# header 2
+
 ## Including Plots
+
+### minor header
 
 You can also embed plots, for example:
 
@@ -79,5 +88,7 @@ getwd()
 #                             full.names = TRUE))
 # file.remove("images")
 ```
+
+# header 3
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -6,12 +6,24 @@ output:
   md_document:
     variant: gfm
     preserve_yaml: TRUE
+    toc: TRUE
+    toc_depth: 3
 knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile,
     encoding = encoding,
     output_dir = "../_portfolio") })
 always_allow_html: true
 ---
+
+- [header 1](#header-1)
+  - [subheader 1](#subheader-1)
+  - [R Markdown](#r-markdown)
+- [header 2](#header-2)
+  - [Including Plots](#including-plots)
+    - [minor header](#minor-header)
+- [header 3](#header-3)
+
+# header 1
 
 ``` r
 list.files("../images")
@@ -27,8 +39,11 @@ list.files("../images")
     ## [15] "mstile-150x150.png"            "mstile-310x150.png"           
     ## [17] "mstile-310x310.png"            "mstile-70x70.png"             
     ## [19] "paragraph-indent.png"          "paragraph-no-indent.png"      
-    ## [21] "profile_picture_v2.jpeg"       "profile.png"                  
-    ## [23] "safari-pinned-tab.svg"         "site-logo.png"
+    ## [21] "pressure-1.png"                "profile_picture_v2.jpeg"      
+    ## [23] "profile.png"                   "safari-pinned-tab.svg"        
+    ## [25] "site-logo.png"                 "stack-1.png"
+
+## subheader 1
 
 ## R Markdown
 
@@ -52,13 +67,19 @@ summary(cars)
     ##  3rd Qu.:19.0   3rd Qu.: 56.00  
     ##  Max.   :25.0   Max.   :120.00
 
+# header 2
+
 ## Including Plots
+
+### minor header
 
 You can also embed plots, for example:
 
 ![](/images/pressure-1.png)<!-- -->
 
 ![](/images/stack-1.png)<!-- -->
+
+# header 3
 
 Note that the `echo = FALSE` parameter was added to the code chunk to
 prevent printing of the R code that generated the plot.
