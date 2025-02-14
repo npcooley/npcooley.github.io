@@ -28,14 +28,19 @@ suppressMessages(library(knitr))
 base_dir <- "~/Repos/Personal_Website/npcooley.github.io/"
 base_url <- "/"
 fig_path <- "images/"
-opts_knit$set(base_dir = base_dir,
-              base_url = base_url)
+opts_knit$set(base.dir = base_dir,
+              base.url = base_url)
 opts_chunk$set(fig.path = fig_path,
                cache.path = "../cache/",
                message = FALSE,
                warning = FALSE,
-               cache = TRUE)
+               cache = FALSE)
 ```
+
+```{r, checkthings}
+list.files("../images")
+```
+
 
 ## R Markdown
 
@@ -51,23 +56,28 @@ summary(cars)
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
+```{r pressure, echo = FALSE}
 plot(pressure)
 ```
 
-```{r dirstuff}
-list.files("images",
-           full.names = TRUE)
-list.files("../cache")
-list.files("../images")
-getwd()
-file.copy(from = list.files("images",
-                            full.names = TRUE),
-          to = "../images/")
-file.remove(list.files("images",
-                            full.names = TRUE))
-file.remove("images")
+```{r stack, echo = FALSE}
+plot(stackloss$Water.Temp)
 ```
 
+
+```{r dirstuff, echo = FALSE, include = FALSE}
+# leaving this in for now as breadcrumb for when i need to come back to it
+list.files("images",
+           full.names = TRUE)
+list.files("../images")
+getwd()
+# setting cache to false seems to make this unnecessary, but there's still a lot happening here under the hood that i don't seem to understand
+# file.copy(from = list.files("images",
+#                             full.names = TRUE),
+#           to = "../images/")
+# file.remove(list.files("images",
+#                             full.names = TRUE))
+# file.remove("images")
+```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
