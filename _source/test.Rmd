@@ -1,0 +1,73 @@
+---
+title: "Using SynExtend - Simple"
+excerpt: "A simple workflow with SynExtend, simply using a synteny map to perform orthology inference between two genomes."
+collection: portfolio
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: TRUE
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile,
+    encoding = encoding,
+    output_dir = "../_portfolio") })
+always_allow_html: true
+---
+
+```{r setup, include = FALSE}
+
+# base_dir <- "~/Dropbox/svmiller.github.io/" # i.e. where the jekyll blog is on the hard drive.
+# base_url <- "/" # keep as is
+# fig_path <- "images/" # customize to heart's content, I 'spose.
+# 
+# knitr::opts_knit$set(base.dir = base_dir, base.url = base_url)
+# knitr::opts_chunk$set(fig.path = fig_path,
+#                       cache.path = '../cache/',
+#                       message=FALSE, warning=FALSE,
+#                       cache = TRUE) 
+suppressMessages(library(knitr))
+base_dir <- "~/Repos/Personal_Website/npcooley.github.io/"
+base_url <- "/"
+fig_path <- "images/"
+opts_knit$set(base_dir = base_dir,
+              base_url = base_url)
+opts_chunk$set(fig.path = fig_path,
+               cache.path = "../cache/",
+               message = FALSE,
+               warning = FALSE,
+               cache = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+```{r dirstuff}
+list.files("images",
+           full.names = TRUE)
+list.files("../cache")
+list.files("../images")
+getwd()
+file.copy(from = list.files("images",
+                            full.names = TRUE),
+          to = "../images/")
+file.remove(list.files("images",
+                            full.names = TRUE))
+file.remove("images")
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
