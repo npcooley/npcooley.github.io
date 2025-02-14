@@ -39,7 +39,7 @@ summary(cars)
 
 You can also embed plots, for example:
 
-![](images/pressure-1.png)<!-- -->
+![](/images/pressure-1.png)<!-- -->
 
 ``` r
 list.files("images",
