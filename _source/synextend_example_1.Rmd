@@ -1,0 +1,180 @@
+---
+title: "Orthology inference with SynExtend - Simple"
+excerpt: "A barebones workflow with SynExtend, simply using a synteny map to perform orthology inference between two genomes."
+collection: portfolio
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: TRUE
+    toc: TRUE
+    toc_depth: 3
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile,
+    encoding = encoding,
+    output_dir = "../_portfolio") })
+always_allow_html: true
+---
+
+# A simple Pipeline
+
+## Introduction
+
+As this is a simple workflow, there's not much dependencies here. This example code is *so* simple that it's probably best suited for users who already have a fairly complex understanding of orthology inference methods and paradigms. The document that this page was knit from can be found in [the '_source' folder in the associated github repo](https://github.com/npcooley/npcooley.github.io). Examples targeting multiple use cases, and folks less entrenched in the field will be coming soon!
+
+```{r setup, include = FALSE}
+
+# base_dir <- "~/Dropbox/svmiller.github.io/" # i.e. where the jekyll blog is on the hard drive.
+# base_url <- "/" # keep as is
+# fig_path <- "images/" # customize to heart's content, I 'spose.
+# 
+# knitr::opts_knit$set(base.dir = base_dir, base.url = base_url)
+# knitr::opts_chunk$set(fig.path = fig_path,
+#                       cache.path = '../cache/',
+#                       message=FALSE, warning=FALSE,
+#                       cache = TRUE) 
+suppressMessages(library(knitr))
+base_dir <- "~/Repos/Personal_Website/npcooley.github.io/"
+base_url <- "/"
+fig_path <- "images/"
+opts_knit$set(base.dir = base_dir,
+              base.url = base_url)
+opts_chunk$set(fig.path = fig_path,
+               cache.path = "../cache/",
+               message = FALSE,
+               warning = FALSE,
+               cache = FALSE)
+```
+
+## Libraries
+
+This workflow is very barebones, the only dependency not loaded with `SynExtend` is `RSQLite`. There are a few other tools within synextend, and there are many uses for inferred orthologous pairs, so its worth assuming that any complex steps that data generated in pipeline like this gets passed to may require a few more libraries.
+
+```{r, libraries}
+suppressMessages(library(SynExtend))
+suppressMessages(library(RSQLite))
+```
+
+## Data Collection
+
+We're just pulling a pair of kitasatospora genomes from the NCBI FTP site. Future example will leverage the NCBI's edirect tools.
+
+```{r, data}
+ftps <- c("https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/948/472/415/GCF_948472415.1_JK4103/",
+          "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/036/010/405/GCF_036010405.1_ASM3601040v1/")
+
+adds <- mapply(SIMPLIFY = TRUE,
+               USE.NAMES = FALSE,
+               FUN = function(x, y) {
+                 paste0(x,
+                        "/",
+                        y[10],
+                        c("_genomic.fna.gz",
+                          "_genomic.gff.gz",
+                          "_protein.faa.gz"))
+               },
+               x = ftps,
+               y = strsplit(x = ftps,
+                            split = "/",
+                            fixed = TRUE))
+fnas <- adds[1, ]
+gffs <- adds[2, ]
+amns <- adds[3, ]
+```
+
+## Data Processing
+
+The initial data processing for this pipeline involves using `DECIPHER` to construct a database of the genomic sequences that we're comparing. We also need to collect the PGAP gene calls for these genomes.
+
+```{r, processing}
+dbpath <- tempfile()
+conn01 <- dbConnect(SQLite(), dbpath)
+genecalls2 <- vector(mode = "list",
+                     length = length(gffs))
+
+for (m1 in seq_along(fnas)) {
+  Seqs2DB(seqs = fnas[m1],
+          type = "FASTA",
+          dbFile = conn01,
+          identifier = as.character(m1),
+          verbose = TRUE)
+  genecalls2[[m1]] <- gffToDataFrame(GFF = gffs[m1],
+                                     Verbose = TRUE)
+}
+names(genecalls2) <- seq(length(genecalls2))
+```
+
+## Initial pipeline steps
+
+Once all our data is collected, we can start with the construction of a synteny map (with `FindSynteny()`), followed by overlaying our genecalls on top of that map (with `NucleotideOverlap()`). Lastly we do a little data munging with `PrepareSeqs()`, which appends coding and non-coding sequences onto the DECIPHER database for simpler access later.
+
+```{r, pipeline1}
+syn <- FindSynteny(dbFile = conn01,
+                   verbose = TRUE)
+pairs(syn)
+l01 <- NucleotideOverlap(SyntenyObject = syn,
+                         GeneCalls = genecalls2,
+                         Verbose = TRUE)
+PrepareSeqs(SynExtendObject = l01,
+            DataBase01 = conn01,
+            Verbose = TRUE)
+```
+
+## Inferrence evaluation steps
+
+We can take the synteny map, with the overlaid gene calls (which are at this point an attribute to the object `l01`), and summarize every 'cell' in this grid that has a syntenic hit inside it. This gives us a list of candidate ortholog inferences (object `p01` in the code below). Following this summarization (which includes alignment and a few other details) we perform a modestly naive k-means clustering step that bins the candidate inferences in to clusters with similar alignment and sequence comparison statistics. At this point, we can drop pairs that belong to comparison communities that appear random, spurious, or below our alignment quality expectations, and we'll be left with a slightly (depending on the stringency of our thresholds) filtered list pairs. Lastly, we then compete our candidates amongst each other to distill our pairs list into inferred orthologs (one-to-one relationships).
+
+```{r, pipeline2}
+p01 <- SummarizePairs(SynExtendObject = l01,
+                      DataBase01 = conn01,
+                      Verbose = TRUE,
+                      IndexParams = list("K" = 5))
+p02 <- ClusterByK(SynExtendObject = p01,
+                  Verbose = TRUE,
+                  ShowPlot = TRUE)
+p03 <- CompetePairs(SynExtendObject = p02[p02$ClusterID %in% which(attr(x = p02,
+                                                                        which = "Retain")), ],
+                    Verbose = TRUE,
+                    PollContext = TRUE)
+```
+
+Internal competition between pairs can be controlled in a variety of ways, including allowing cross-contig competitions or not, or allowing local syntenic block context to weigh in on these competitions or not. This step is the most recently added so it may change slightly in form or implemention.
+
+## Some plots
+
+```{r, plots1}
+hist(x = p03$PID,
+     breaks = seq(from = 0,
+                  by = 0.01,
+                  to = 1),
+     xaxs = "i",
+     yaxs = "i",
+     main = "Orthologous pairs with background scores included",
+     xlab = "PID")
+```
+
+A histogram of PIDs for inferred orthologs! What a user is interested in doing with these pairs is dependent upon their research goals, and further examples will expand on the inner workings of this pipeline, and potential use cases for these pairs lists.
+
+## Final thoughts
+
+SynExtend has been a bit of a meandering project so far. Part of the reason for it living in the research doldrums for so long is that there aren't particularly good methods for benchmarking orthology inference, particularly in the space where this tool is intended for use (large scale prokaryotic genomics). The goal here was to build a backbone of orthology inference that was entirely based within R (with minimal dependencies!) and was relatively quick. SynExtend has been through a lot of itertions at this point, with continually improving inference quality and varying degrees of resource usage improvements, and will likely go through several more before, and after publication.
+
+```{r, sessioninfo}
+sessionInfo()
+```
+
+
+```{r dirstuff, echo = FALSE, include = FALSE}
+# leaving this in for now as a breadcrumb for when i need to come back to it
+list.files("images",
+           full.names = TRUE)
+list.files("../images")
+getwd()
+# setting cache to false seems to make this unnecessary, but there's still a lot happening here under the hood that i don't seem to understand
+# file.copy(from = list.files("images",
+#                             full.names = TRUE),
+#           to = "../images/")
+# file.remove(list.files("images",
+#                             full.names = TRUE))
+# file.remove("images")
+```
+
