@@ -82,10 +82,10 @@ analytics:
 author:
   name             : "Nicholas Cooley"
   avatar           : "profile_picture_v2.jpeg"
-  bio              : "Software Engineer \nUniversity of Pittsburgh \nDepartment of Biomedical Informatics"
-  location         : "Pittsburgh"
+  bio              : "Developer Engagement Lead\nBioconductor"
+  location         : "Limerick, Ireland"
   employer         :
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=nicholas+cooley"
   googlescholar    : "https://scholar.google.com/citations?user=p6WxMVwAAAAJ&hl=en&oi=ao"
   email            :
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
