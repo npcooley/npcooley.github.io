@@ -33,10 +33,10 @@ indexed publications can be found
 
 ## Pseudogenes and intrinsic error in genomic data
 
-[Publication
-link](https://link.springer.com/article/10.1186/s12864-024-10137-0)
-[Github repo of plots and
-results](https://github.com/npcooley/Pseudogenes)
+- [Publication
+  link](https://link.springer.com/article/10.1186/s12864-024-10137-0)
+- [Github repo of plots and
+  results](https://github.com/npcooley/Pseudogenes)
 
 Modern genomic annotation pipelines like
 [PGAP](https://www.ncbi.nlm.nih.gov/refseq/annotation_prok/) and
@@ -52,10 +52,10 @@ have been incorporated in the assembled genomic data.
 
 ## Functional classification of protein coding sequences
 
-[Publication
-link](https://academic.oup.com/nargab/article/3/3/lqab080/6371227)
-[Github repo of plots and
-results](https://github.com/npcooley/AAClassification)
+- [Publication
+  link](https://academic.oup.com/nargab/article/3/3/lqab080/6371227)
+- [Github repo of plots and
+  results](https://github.com/npcooley/AAClassification)
 
 Accurate classification of protein coding sequences is difficult. A
 functional classifier based on the previously existing taxonomic
