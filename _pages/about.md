@@ -22,15 +22,15 @@ redirect_from:
 - [About me](#about-me)
 - [Current Role](#current-role)
 - [Current Projects](#current-projects)
-  - [BiocMetal](#biocmetal)
+  - [ACFmetal](#acfmetal)
   - [SynExtend](#synextend)
   - [Others](#others)
 
 # About me
 
-I am a software engineer with a meandering work history, and highly
+I am a software engineer with a meandering work history, and an
 interdisciplinary training background. I received my undergraduate
-degress in microbiology and molecular genetics from The Ohio State
+degrees in microbiology and molecular genetics from The Ohio State
 University, and my Ph.D in organic chemistry from the University of
 Missouri. I trained as a postdoc, first as a T15 training fellow, and
 then as a regular postdoctoral researcher in the Department of
@@ -46,7 +46,7 @@ Zuckerburg Institute, and has a broad mandate for improving developer
 interactions with the Bioconductor project. This includes, but is not
 limited; improving developer training resources, improving coding
 practices and standards within the Bioconductor ecosystem, addressing
-technical debt and planning for forward compatibility within the
+technical debt, planning for forward compatibility within the
 Bioconductor ecosystem, and decreasing the technical and conceptual
 gulfs between Bioconductor users who are not developers, and
 bioconductor users who are very much developers.
@@ -63,17 +63,15 @@ In my current role, I have some flexibility to spend a small amount of
 time on technical projects of my own. The following projects are under
 current, albeit somewhat slow paced, development.
 
-## BiocMetal
+## ACFmetal
 
-Robust and reliable programmatic access to GPU compute is still largely
-absent from the R programming language. The reasons for this absence are
-mostly historical, and I have started to explore ways to address that
-gap in R and Bioconductor’s technical capabilities with a package
-currently under the working name
-[BiocMetal](https://github.com/npcooley/BiocMetal). Though this project
-currently lends itself to more generalizable programmatic GPU compute,
-ideally it will eventually encompass access to, and leveraging of, large
-sequence based language models in R.
+Reliable programmatic access to non-CPU compute is still largely absent
+from the R programming language. The reasons for this absence are a
+combination of historical and technical. [Alternative Compute Framework:
+metal](https://github.com/npcooley/ACFmetal) is an attempt to address
+this gap in R’s technical capabilities with a series of C-level
+accessors for the Apple specific [Metal
+API](https://developer.apple.com/metal/).
 
 ## SynExtend
 
