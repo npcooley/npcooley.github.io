@@ -14,9 +14,6 @@ knit: (function(inputFile, encoding) {
 always_allow_html: true
 excerpt: "Publications"
 author_profile: true
-redirect_from: 
-  - /publications/
-  - /publications.html
 ---
 
 # Recent publications
