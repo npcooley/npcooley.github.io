@@ -1,5 +1,5 @@
 ---
-permalink: /publications
+permalink: /publications/
 title: "Recent publications"
 output:
   md_document:
