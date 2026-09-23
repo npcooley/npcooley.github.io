@@ -1,0 +1,9 @@
+---
+title: "SynExtend"
+description: "Orthology inference from synteny maps, and related genomic tools, distributed as a Bioconductor package."
+categories: [R, Bioconductor]
+---
+
+[SynExtend](https://bioconductor.org/packages/release/bioc/html/SynExtend.html) was originally envisioned as a relatively simple tool for performing orthology inference from synteny maps alone. It has grown over time to include contributions outside of that scope and is still a work in progress. Development, validation, and testing of tools within the package is ongoing.
+
+- Package: <https://bioconductor.org/packages/release/bioc/html/SynExtend.html>

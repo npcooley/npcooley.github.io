@@ -1,0 +1,19 @@
+---
+title: "Publications"
+---
+
+A selection of recent publications is included here. My full list of indexed publications is on [Google Scholar](https://scholar.google.com/citations?user=p6WxMVwAAAAJ&hl=en&oi=ao).
+
+## Pseudogenes and intrinsic error in genomic data
+
+- [Publication](https://link.springer.com/article/10.1186/s12864-024-10137-0)
+- [GitHub repository of plots and results](https://github.com/npcooley/Pseudogenes)
+
+Modern genomic annotation pipelines like [PGAP](https://www.ncbi.nlm.nih.gov/refseq/annotation_prok/) and [EGAP](https://www.ncbi.nlm.nih.gov/refseq/annotation_euk/process/) provide features annotated as **pseudogenes**. What these annotations realistically represent depends in part on the technologies used to generate the source sequence data and the strategies used to assemble the genomic data being annotated. A pseudogene annotation can represent either a true, recent mutation that causes loss or modulation of function in a clearly identifiable feature, or a sequencing or assembly error that has been incorporated into the assembled genomic data.
+
+## Functional classification of protein coding sequences
+
+- [Publication](https://academic.oup.com/nargab/article/3/3/lqab080/6371227)
+- [GitHub repository of plots and results](https://github.com/npcooley/AAClassification)
+
+Accurate classification of protein coding sequences is difficult. A functional classifier based on the previously existing taxonomic classifier [IDTAXA](https://decipher.codes/Classification.html) was developed with an emphasis on specificity. Benchmarking classification strategies with misclassification and overclassification rates provides a clear picture of the strengths and weaknesses of different methods.

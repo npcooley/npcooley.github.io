@@ -1,0 +1,23 @@
+---
+title: "Projects"
+listing:
+  # `id` ties this listing to the placeholder div below, so the listing renders
+  # exactly where the div sits instead of being appended at the bottom.
+  id: projects-listing
+  contents:
+    - projects/acfmetal.qmd
+    - projects/synextend.qmd
+  # `table` rather than `default`/`grid`: those two layouts reserve space for a
+  # thumbnail image and look broken when items have none. If you later add an
+  # `image:` to each project's front matter, try `type: default` or `grid`.
+  type: table
+  sort: "title"
+  fields: [title, description, categories]
+  # To add a clickable category sidebar (useful once you have many projects),
+  # add:  categories: true
+---
+
+Technical projects under current, albeit somewhat slow paced, development.
+
+::: {#projects-listing}
+:::

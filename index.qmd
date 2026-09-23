@@ -1,0 +1,49 @@
+---
+title: "Nicholas Cooley"
+subtitle: "Developer Engagement Lead, Bioconductor"
+image: images/profile_picture_v2.jpeg
+about:
+  # "trestles" = profile image and links in a left sidebar, text on the right.
+  # Alternatives to try: jolla, solana, marquee, broadside.
+  # https://quarto.org/docs/websites/website-about.html
+  template: trestles
+  links:
+    # `icon` names come from Bootstrap Icons (https://icons.getbootstrap.com),
+    # written without the "bi-" prefix.
+    - icon: github
+      text: GitHub
+      href: https://github.com/npcooley
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/npcooley
+    - icon: mortarboard
+      text: Google Scholar
+      href: https://scholar.google.com/citations?user=p6WxMVwAAAAJ&hl=en&oi=ao
+    - icon: person-badge
+      text: ORCID
+      href: https://orcid.org/0000-0002-6029-304X
+    - icon: journal-medical
+      text: PubMed
+      href: https://www.ncbi.nlm.nih.gov/pubmed/?term=nicholas+cooley
+    # Removed during migration; uncomment to restore.
+    # - icon: twitter
+    #   text: Twitter
+    #   href: https://twitter.com/npcooley
+    # - icon: instagram
+    #   text: Instagram
+    #   href: https://instagram.com/npcooley
+---
+
+## About me
+
+I am a software engineer with a meandering work history and an interdisciplinary training background. I received my undergraduate degrees in microbiology and molecular genetics from The Ohio State University, and my Ph.D. in organic chemistry from the University of Missouri. I trained as a postdoc, first as a T15 training fellow and then as a regular postdoctoral researcher, in the Department of Biomedical Informatics at the University of Pittsburgh, and eventually transitioned to a Research Software Engineer role at Pitt. I am currently the Developer Engagement Lead for Bioconductor and am based in Limerick, Ireland.
+
+## Current role
+
+My current role in developer engagement is funded through the Chan Zuckerberg Initiative, and has a broad mandate for improving developer interactions with the Bioconductor project. This includes, but is not limited to: improving developer training resources, improving coding practices and standards within the Bioconductor ecosystem, addressing technical debt, planning for forward compatibility within the Bioconductor ecosystem, and decreasing the technical and conceptual gulfs between Bioconductor users who are not developers and Bioconductor users who are very much developers.
+
+My current role is a change of pace from solely software development, and an opportunity to have a bigger impact on how R as a language and Bioconductor as a project can continue to play a pivotal role in scientific discovery writ large, in both academic and non-academic bioinformatics.
+
+## Current projects
+
+I have some flexibility to spend a small amount of time on technical projects of my own. See the [Projects](projects.qmd) page for details. I am generally excited to lend my expertise to projects that can benefit from my unconventional mix of skills and experience. Feel free to reach out!

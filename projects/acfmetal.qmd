@@ -1,0 +1,9 @@
+---
+title: "ACFmetal"
+description: "C-level accessors that give R programmatic access to Apple's Metal API for non-CPU compute."
+categories: [R, C, GPU]
+---
+
+Reliable programmatic access to non-CPU compute is still largely absent from the R programming language. The reasons for this absence are a combination of historical and technical. [Alternative Compute Framework: metal](https://github.com/npcooley/ACFmetal) is an attempt to address this gap in R's technical capabilities with a series of C-level accessors for the Apple-specific [Metal API](https://developer.apple.com/metal/).
+
+- Source: <https://github.com/npcooley/ACFmetal>

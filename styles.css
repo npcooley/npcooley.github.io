@@ -1,0 +1,7 @@
+/* styles.css
+   Site-specific CSS overrides, loaded after the Bootswatch theme chosen in
+   _quarto.yml. Intentionally empty for now. Add rules here as you find things
+   you want to change (browser dev tools -> inspect element -> copy the selector).
+   For deeper theme changes (colors, fonts), Quarto also supports a custom
+   .scss theme file; see https://quarto.org/docs/output-formats/html-themes.html
+*/

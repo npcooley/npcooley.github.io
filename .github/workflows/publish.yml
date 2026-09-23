@@ -1,0 +1,65 @@
+# .github/workflows/publish.yml
+# Renders the Quarto site and deploys it to GitHub Pages on every push to the
+# default branch (master). No rendered output is ever committed to the repo.
+#
+# ONE-TIME SETUP (repo Settings -> Pages): set "Source" to "GitHub Actions".
+# Until that is done, this workflow will build but the deploy step will fail.
+
+name: Publish site
+
+on:
+  push:
+    branches: [master]
+  # Adds a "Run workflow" button in the Actions tab for manual re-deploys.
+  workflow_dispatch:
+
+# Least privilege: only what Pages deployment requires.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deployments at once; let an in-progress one finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          # Pinned so builds are reproducible. This is the version the site
+          # was developed and test-rendered with. Bump deliberately, and
+          # re-check `quarto render` locally when you do.
+          version: 1.10.18
+
+      - name: Render site
+        run: quarto render
+
+      - name: Fail if expected output is missing
+        run: |
+          test -f _site/index.html || { echo "ERROR: _site/index.html missing"; exit 1; }
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

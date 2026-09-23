@@ -1,2 +1,16 @@
-_site/
+# Build output and Quarto's scratch space are regenerated on every render.
+/_site/
+/.quarto/
 
+# Intermediate files Quarto may leave behind.
+*.quarto_ipynb
+
+# If you later adopt `execute: freeze` (to avoid re-running R/Python code on
+# every build), you must COMMIT the _freeze/ directory. It is deliberately not
+# ignored here for that reason.
+
+# OS noise.
+.DS_Store
+Thumbs.db
+
+**/*.quarto_ipynb

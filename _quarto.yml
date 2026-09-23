@@ -1,0 +1,56 @@
+# _quarto.yml
+# Project-wide configuration. Anything set here applies to every page unless a
+# page's own YAML front matter overrides it.
+
+project:
+  type: website
+
+  # Where rendered HTML goes. This is the default, but it is stated explicitly
+  # so the deploy workflow and this file cannot silently disagree.
+  output-dir: _site
+
+  # EXPLICIT render list. Only the files named here are turned into pages.
+  #   Benefit: stray files (README.md, notes, drafts) can never leak into the site.
+  #   Cost:    when you add a new page, you must add it here too, otherwise
+  #            `quarto render` will silently skip it. If a page is "missing",
+  #            check this list first.
+  render:
+    - index.qmd
+    - projects.qmd
+    - projects/acfmetal.qmd
+    - projects/synextend.qmd
+    - publications.qmd
+
+website:
+  title: "Nicholas Cooley"
+  site-url: "https://npcooley.github.io"
+  description: "Biology, software development, and bioinformatics at the edge of discovery"
+
+  navbar:
+    # Each entry points at a source file (.qmd); Quarto rewrites it to the .html output.
+    left:
+      - href: index.qmd
+        text: Home
+      - href: projects.qmd
+        text: Projects
+      - href: publications.qmd
+        text: Publications
+
+  page-footer:
+    left: "© 2026 Nicholas Cooley"
+    right: "Built with [Quarto](https://quarto.org)"
+
+format:
+  html:
+    # Two named themes produce an automatic light/dark toggle in the navbar.
+    # Full list of built-in themes: https://quarto.org/docs/output-formats/html-themes.html
+    theme:
+      light: flatly
+      dark: darkly
+    css: styles.css
+
+# NOTE ON CODE EXECUTION
+# No page currently contains executable code cells (R/Python), so rendering
+# needs nothing but Quarto. When you add {r} or {python} chunks, the deploy
+# workflow will fail loudly until R/Python is installed in CI. That is the
+# intended behavior: a loud failure beats a silently unexecuted chunk.
