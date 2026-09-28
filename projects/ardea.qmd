@@ -1,0 +1,11 @@
+---
+title: "ardea"
+description: "Tools for interacting with GPU framework APIs in R"
+categories: [R, C, GPU]
+---
+
+`ardea` has been recently submitted to [CRAN](https://cran.r-project.org/) and combines work that was originally performed with [metal](https://github.com/npcooley/ACFmetal) and [CUDA](https://github.com/npcooley/ACFcuda) separately, and tooling for users to interface with [OpenCL](https://www.khronos.org/opencl/). `ardea`'s goal is to provide reliable and uniform access to non-CPU compute devices for R users in familiar R-ish patterns. It is currently somewhat limited in functionality, but provides reliable and robust tooling for incorporating GPU function dispatch into in ad-hoc scripts or functions. `ardea` *should* install anywhere R will install, but it will only compile tooling for frameworks it can detect during installation.
+
+This is still a work in progress, and is a bit of a free-time project. If it is accepted to CRAN, the next steps for `ardea` will focus on expanding functionality to cover realistic use-cases for R package developers.
+
+- Source: <https://github.com/npcooley/ardea>

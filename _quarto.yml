@@ -17,8 +17,9 @@ project:
   render:
     - index.qmd
     - projects.qmd
-    - projects/acfmetal.qmd
+    - projects/ardea.qmd
     - projects/synextend.qmd
+    - projects/using_synextend.qmd
     - publications.qmd
 
 website:
@@ -49,8 +50,7 @@ format:
       dark: darkly
     css: styles.css
 
-# NOTE ON CODE EXECUTION
-# No page currently contains executable code cells (R/Python), so rendering
-# needs nothing but Quarto. When you add {r} or {python} chunks, the deploy
-# workflow will fail loudly until R/Python is installed in CI. That is the
-# intended behavior: a loud failure beats a silently unexecuted chunk.
+# pages that have code execution need to either be limited to what the CI
+# can perform without any funny business, or include:
+# execute:
+#  freeze: true
